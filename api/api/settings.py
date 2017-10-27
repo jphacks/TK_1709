@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'exhibit',
     'returning',
     'split',
-    'rent'
+    'rent',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
