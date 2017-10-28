@@ -1,0 +1,5 @@
+STATIC_SETTINGS = {
+    'FEED_REGION_NAME': '',
+    'FEED_BUCKET_NAME': '',
+    'FEED_DIRECTORY': '',
+}
