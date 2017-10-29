@@ -106,5 +106,5 @@
     - 出品、レンタル、商品一覧表示などのAPI
 - 特に力を入れた部分
     - [画像分割API](https://github.com/jphacks/TK_1709/tree/master/kashicari_api/split)  
-    - [iOSアプリ（特にUI, UX）](https://github.com/jphacks/TK_1709/tree/master/Kashikari)  
-    - デプロイ（明日からサービスとして使えます！！！）  
+    - [iOSアプリ（特にUI, UX）](https://github.com/jphacks/TK_1709/tree/master/Kashikari)  
+    - デプロイ（明日からサービスとして使えます！！！）  
