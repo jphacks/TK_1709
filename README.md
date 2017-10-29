@@ -1,6 +1,6 @@
 # Kashicari（カシカリ）
 
-[![Kashicari](https://raw.github.com/GabLeRoux/WebMole/master/ressources/WebMole_Youtube_Video.png)]()
+[![Kashicari](https://raw.github.com/GabLeRoux/WebMole/master/ressources/WebMole_Youtube_Video.png)](https://youtu.be/O9MAX9LW0nc)
 
 ## 製品概要
 ### 倉庫 Tech
