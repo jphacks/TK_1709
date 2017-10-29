@@ -103,7 +103,7 @@
 - サーバー側API作成
     - 複数の物体が映る画像を分割して個別の物体の画像にするAPI
     - 返却された商品の写真の判定をするAPI
-    - 出品、レンタル、商品一覧表示などのAPI
+    - 出品、レンタル、商品一覧表示などのAPI
 - 特に力を入れた部分
     - [画像分割API](https://github.com/jphacks/TK_1709/tree/master/kashicari_api/split)  
     - [iOSアプリ（特にUI, UX）](https://github.com/jphacks/TK_1709/tree/master/Kashikari)  
