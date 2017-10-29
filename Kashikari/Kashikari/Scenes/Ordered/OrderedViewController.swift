@@ -45,19 +45,20 @@ class OrderedViewController: UIViewController {
             make.left.equalToSuperview()
             make.centerY.equalToSuperview().offset(-15)
             make.width.equalToSuperview()
-            make.height.equalTo(130)
+            make.height.equalTo(110)
         })
         
         passwordStackView.addSubview(passwordHeadingLabel)
         passwordHeadingLabel.snp.makeConstraints({ (make) -> Void in
-            make.left.equalToSuperview().offset(15)
-            make.centerY.equalToSuperview().offset(-15)
+            make.left.equalToSuperview().offset(10)
+            make.right.equalToSuperview().offset(-10)
+            make.top.equalToSuperview().offset(15)
         })
 
         passwordStackView.addSubview(passwordValueLabel)
         passwordValueLabel.snp.makeConstraints({ (make) -> Void in
             make.centerX.equalToSuperview()
-            make.top.equalTo(passwordHeadingLabel.snp.bottom).offset(10)
+            make.top.equalTo(passwordHeadingLabel.snp.bottom).offset(15)
         })
         
     }

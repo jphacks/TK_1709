@@ -35,7 +35,7 @@ enum DjangoAPI {
 extension DjangoAPI: TargetType {
     
     var baseURL: URL {
-        let baseURLString: String = "http://54.64.12.240:5000"
+        let baseURLString: String = "http://54.64.12.240:8000"
         return URL(string: baseURLString)!
     }
     

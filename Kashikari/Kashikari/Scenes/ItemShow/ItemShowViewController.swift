@@ -129,7 +129,7 @@ class ItemShowViewController: UIViewController {
         let button = UIButton()
         button.titleEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         button.layer.cornerRadius = 5
-        button.setTitle("レンタル手続きへ", for: .normal)
+        button.setTitle("レンタルする", for: .normal)
         button.titleLabel?.font = UIFont(name: UIFont.themeBoldFont, size: 15)
         button.backgroundColor = .red
         button.addTarget(self, action: #selector(moveToChoiceRentalPeriodView), for: .touchUpInside)

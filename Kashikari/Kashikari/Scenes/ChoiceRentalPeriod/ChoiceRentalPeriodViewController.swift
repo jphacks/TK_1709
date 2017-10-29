@@ -84,12 +84,14 @@ class ChoiceRentalPeriodViewController: UIViewController {
         let dataList = ["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
         field.setup(dataList: dataList)
         field.backgroundColor = .white
+        field.textAlignment = NSTextAlignment.right
+        field.borderStyle = UITextBorderStyle.roundedRect
         return field
     }()
 
     private lazy var choiceHeadingLabel: UILabel = {
         let label = UILabel()
-        label.text = "レンタルする期間を選んでください。"
+        label.text = "何日間レンタルしますか？"
         label.font = UIFont(name: UIFont.themeFont, size: 25)
         label.textColor = .black
         label.lineBreakMode = .byCharWrapping
@@ -98,7 +100,7 @@ class ChoiceRentalPeriodViewController: UIViewController {
     }()
 
     private lazy var defaultAction: UIAlertAction = {
-        let defaultAction = UIAlertAction(title: "注文して決済",
+        let defaultAction = UIAlertAction(title: "決済して注文する",
                                           style: UIAlertActionStyle.default,
                                           handler:{(action:UIAlertAction!) -> Void in
                                             self.moveToOrderedView()})
@@ -112,20 +114,20 @@ class ChoiceRentalPeriodViewController: UIViewController {
         return cancelAction
     }()
     private lazy var choiceAlertController: UIAlertController = {
-        let alertController = UIAlertController(title:"sheet",
-                                                message: "actinSheet",
-                                                preferredStyle: UIAlertControllerStyle.actionSheet)
-        alertController.addAction(cancelAction)
+        let alertController = UIAlertController(title:"注文を確定しますか？",
+                                                message: "返却日は11月5日です",
+                                                preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(defaultAction)
+        alertController.addAction(cancelAction)
         return alertController
     }()
     
     private lazy var orderButton: UIButton = {
         let button = UIButton()
         button.titleEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        button.layer.cornerRadius = 5
-        button.setTitle("注文を確定する", for: .normal)
-        button.titleLabel?.font = UIFont(name: UIFont.themeBoldFont, size: 20)
+        button.layer.cornerRadius = 10
+        button.setTitle("決定", for: .normal)
+        button.titleLabel?.font = UIFont(name: UIFont.themeBoldFont, size: 23)
         button.backgroundColor = .red
         button.addTarget(self, action: #selector(presentChoiceAlertController), for: .touchUpInside)
         
@@ -153,21 +155,21 @@ class ChoiceRentalPeriodViewController: UIViewController {
         choiceTextField.snp.makeConstraints({ (make) -> Void in
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview().offset(10)
-            make.width.equalTo(150)
+            make.width.equalTo(100)
             make.height.equalTo(30)
         })
         view.addSubview(choiceHeadingLabel)
         choiceHeadingLabel.snp.makeConstraints({ (make) -> Void in
-            make.left.equalToSuperview().offset(20)
-            make.right.equalToSuperview().offset(-20)
+            make.centerX.equalToSuperview()
             make.bottom.equalTo(choiceTextField.snp.top).offset(-40)
         })
         
         view.addSubview(orderButton)
         orderButton.snp.makeConstraints({ (make) -> Void in
-            make.left.equalToSuperview().offset(30)
-            make.right.equalToSuperview().offset(-30)
-            make.bottom.equalTo(choiceTextField.snp.bottom).offset(20)
+            make.centerX.equalToSuperview()
+            make.top.equalTo(choiceTextField.snp.bottom).offset(50)
+            make.height.equalTo(40)
+            make.width.equalTo(150)
 
         })
 
