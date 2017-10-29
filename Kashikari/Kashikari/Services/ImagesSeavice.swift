@@ -2,13 +2,13 @@ import Foundation
 
 class ImagesService: NSObject {
     
-    func post(image: String, completion: ((Any?) -> Void)?) {
+    func post(image: Data, completion: (([String]) -> Void)?) {
         
         _ = Network.request(
             target: .sendImage(img: image),
             success: { json in
-                if let images = json.arrayValue.first?.dictionaryObject {
-                    completion?(images["file_urls"])
+                if let imagesArray = json.dictionaryObject, let images = imagesArray["file_urls"] as? [String] {
+                    completion?(images)
                 }
         },
             error: { statusCode in

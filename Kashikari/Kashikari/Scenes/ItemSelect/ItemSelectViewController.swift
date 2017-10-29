@@ -35,7 +35,7 @@ class ItemSelectViewController: UIViewController {
         return bar
     }()
     
-    private lazy var okButton: UIButton = {
+    fileprivate lazy var okButton: UIButton = {
         let button = UIButton()
         button.frame = CGRect(x: 0, y:0, width: 50, height: 50)
         button.setImage(UIImage(named: "maru10"), for: .normal)
@@ -44,7 +44,7 @@ class ItemSelectViewController: UIViewController {
         return button
     }()
     
-    private lazy var cancelButton: UIButton = {
+    fileprivate lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.frame = CGRect(x: 0, y:0, width: 50, height: 50)
         button.setImage(UIImage(named: "batu9"), for: .normal)
@@ -136,6 +136,7 @@ extension ItemSelectViewController: KolodaViewDataSource {
         if let url = URL(string: imageUrls[index]) {
             imageView.af_setImage(withURL: url)
         }
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }
     

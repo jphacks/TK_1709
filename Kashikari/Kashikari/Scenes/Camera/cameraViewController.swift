@@ -127,10 +127,13 @@ class cameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         // send request
         UIApplication.shared.beginIgnoringInteractionEvents()
         indicator.startAnimating()
-        Service.images.post(image: photoData.base64EncodedString(options: []), completion: { [weak self] images in
+        Service.images.post(image: photoData, completion: { [weak self] images in
+            let vc = ItemSelectViewController()
+            vc.imageUrls = images
             DispatchQueue.main.async {
                 self?.indicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
+                self?.navigationController?.pushViewController(vc, animated: true)
             }
         })
     }

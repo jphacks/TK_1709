@@ -18,6 +18,14 @@ class MainViewController: ButtonBarPagerTabStripViewController {
         return button
     }()
     
+    private lazy var indicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        indicator.backgroundColor = UIColor.translucentBlack
+        indicator.layer.cornerRadius = 5
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+    
     private lazy var actionSheet: UIAlertController = {
         let actionSheet: UIAlertController = UIAlertController(title:"画像を選択",
                                                                message: "投稿のための画像を選んでください(複数写っていても可)",
@@ -63,6 +71,13 @@ class MainViewController: ButtonBarPagerTabStripViewController {
         navigationItem.titleView = logoImage
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: cameraButton)
         navigationController?.navigationBar.isTranslucent = false
+        view.addSubview(indicator)
+        indicator.snp.makeConstraints({ (make) -> Void in
+            make.center.equalToSuperview()
+            make.width.equalTo(60)
+            make.height.equalTo(60)
+        })
+        view.bringSubview(toFront: indicator)
     }
 
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
@@ -96,19 +111,21 @@ class MainViewController: ButtonBarPagerTabStripViewController {
 
 extension MainViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-//        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage, let imageData = UIImagePNGRepresentation(image) {
-//            Service.images.post(image: imageData.base64EncodedString(), completion: {[weak self] images in
-//                print(images!)
-//            })
-            
-            let urls = ["https://static-mercari-jp-imgtr2.akamaized.net/photos/m61079367510_1.jpg?1509117582",
-                        "https://static-mercari-jp-imgtr2.akamaized.net/photos/m623571634_1.jpg?1456582097",
-                        "https://static-mercari-jp-imgtr2.akamaized.net/photos/m59616650679_1.jpg?1505530473"]
-            
-            let vc = ItemSelectViewController()
-            vc.imageUrls = urls
-            picker.pushViewController(vc, animated: true)
-//        }
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        indicator.startAnimating()
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage, let imageData = UIImagePNGRepresentation(image) {
+            Service.images.post(image: imageData, completion: {[weak self] images in
+                DispatchQueue.main.async {
+                    self?.indicator.stopAnimating()
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                }
+                let vc = ItemSelectViewController()
+                vc.imageUrls = images
+                DispatchQueue.main.async {
+                    picker.pushViewController(vc, animated: true)
+                }
+            })
+        }
     }
 }
 

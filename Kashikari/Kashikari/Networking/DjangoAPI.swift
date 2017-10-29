@@ -1,11 +1,3 @@
-//
-//  DjangoAPI.swift
-//  Kashikari
-//
-//  Created by 山田涼太 on 2017/10/24.
-//  Copyright © 2017年 吉野克基. All rights reserved.
-//
-
 import Foundation
 
 import Moya
@@ -15,44 +7,30 @@ import SwiftyJSON
 enum DjangoAPI {
     case getItems
     case postItem(name: String, description: String, imageUrl: String, price: Int, deadline: String, status: String, username: String)
-    case sendImage(img: String)
+    case sendImage(img: Data)
 }
 
-
-//enum DjangoAPI {
-//
-//    // images
-////    case postImage(image: Image)
-//
-//    // items
-//    case getItems
-//    case getItem(itemId: Int)
-//    case createItem(name: String, description: String, image_url: String, price: Int, deadline: String, status: String, username: String?)
-//
-//}
-
-
 extension DjangoAPI: TargetType {
-    
+
     var baseURL: URL {
-        let baseURLString: String = "http://54.64.12.240:8000"
+        let baseURLString: String = "http://13.113.47.172"
         return URL(string: baseURLString)!
     }
-    
+
     var path: String {
         switch self {
-            
+
         case .getItems,
              .postItem:
-            return "/exhibit/items"
+            return "/exhibit/items/"
         case .sendImage:
             return "/split/"
         }
     }
-    
+
     public var method: Moya.Method {
         switch self {
-            
+
         case .postItem,
              .sendImage:
             return .post
@@ -60,95 +38,51 @@ extension DjangoAPI: TargetType {
             return .get
         }
     }
-    
+
     public var parameters: [String: Any]? {
         switch self {
-        case .sendImage(let img):
-            return ["img": img]
+        case .postItem(let name,
+                       let description,
+                       let imageUrl,
+                       let price,
+                       let deadline,
+                       let status,
+                       let username):
+            return ["name": name, "description": description, "image_url": imageUrl,
+                    "price": price, "deadline": deadline, "status": status, "username": username]
         default:
             return nil
 
         }
     }
-    
+
     var sampleData: Data {
         return Data()
     }
 
     var task: Task {
+        if case .sendImage(let img) = self {
+            let multipartFormData = MultipartFormData(provider: .data(img.base64EncodedData()), name: "img")
+            return .uploadMultipart([multipartFormData])
+        }
+
         return .requestPlain
     }
-    
+
     var headers: [String : String]? {
         return nil
     }
 
+    var parameterEncoding: Moya.ParameterEncoding {
+
+        switch self.method {
+        case .get:
+            return URLEncoding.default
+        default:
+            return JSONEncoding.default
+        }
+    }
 }
-
-
-//extension DjangoAPI: TargetType {
-//    var baseURL: URL {
-//        let baseURLString: String = "http://54.64.12.240"
-//        return URL(string: baseURLString)!
-//    }
-//
-//    var path: String {
-//        switch self {
-//
-////        case .postImage:
-////            return "/exhibit/items"
-//
-//        case .getItems:
-//            return "/exhibit/items"
-//
-//        case .getItem(let itemId):
-//            return "/exhibit/items/\(itemId)"
-//
-//        case .createItem:
-//            return "/exhibit/items"
-//
-//        }
-//    }
-//
-//    public var method: Moya.Method {
-//        switch self {
-//
-//        case .getItems,
-//             .getItem:
-//            return .get
-//
-//        case .createItem:
-//            return .post
-//
-//        default:
-//            return .get
-//
-//        }
-//    }
-//
-//    public var parameters: [String: Any]? {
-//        switch self {
-//
-//        case .createItem(let name, let description, let image_url, let price, let deadline, let status, let username):
-//            return [
-//                "name" : name,
-//                "description" : description,
-//                "image_url" : image_url,
-//                "price" : price,
-//                "deadline" : deadline,
-//                "status" : status,
-//                "username" : username ?? "",
-//            ]
-//
-//        default:
-//            return nil
-//        }
-//    }
-//
-//    var sampleData: Data {
-//        return Data()
-//    }
-//}
 
 
 struct Network {
@@ -237,4 +171,3 @@ struct Network {
     }
 
 }
-
