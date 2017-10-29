@@ -13,8 +13,21 @@ class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
 
+    def get_queryset(self, *args, **kwargs):
+        queryset_list = Item.objects.filter(status="available")
+        target = Item.objects.filter(id=1).get()
+        if target.status == "available":
+            target.status = "unavailable"
+        else:
+            target.status = "available"
+
+        target.save()
+        return queryset_list
+
     def create(self, request, *args, **kwargs):
-        data_dict = request.data.copy()
+        print('request: ')
+        print(request.POST)
+        data_dict = request.POST.copy()
 
         # category取得
         categories = morpho.get_categories(data_dict['name'])
